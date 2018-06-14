@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: Mulciber
+  datasource:
+    url: jdbc:postgresql://${db.addr}
+    username: ${db.user}
+    password: ${db.pass}
+
+---
+
+spring:
+  profiles:
+    active: local
+db:
+  addr: localhost:5432/mulciber
+  user: postgres
+  pass: postgres
