@@ -1,6 +1,5 @@
 package io.pozhidaev.mulciber;
 
-import org.jooq.DSLContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
