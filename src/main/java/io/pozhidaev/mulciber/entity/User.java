@@ -3,20 +3,18 @@ package io.pozhidaev.mulciber.entity;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
 @Entity
+@Table(name = "sec_user")
 public class User {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -24,7 +22,7 @@ public class User {
             name = "UUID",
             strategy = "uuid"
     )
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false, unique = true)
     private UUID id;
 
     @NotNull
@@ -53,5 +51,26 @@ public class User {
     @NotNull
     @Column(nullable = false)
     private LocalDateTime dateOfBirth;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Password> passwords;
+
+    @NotNull
+    @Column
+    private Boolean isDeleted;
+
+    @NotNull
+    private LocalDateTime createdAt;
+
+    @NotNull
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    private void onPersist(){
+        isDeleted = false;
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
 
 }

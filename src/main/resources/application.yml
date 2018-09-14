@@ -11,7 +11,17 @@ spring:
 spring:
   profiles:
     active: local
-db:
-  addr: localhost:5432/mulciber
-  user: postgres
-  pass: postgres
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mulciber
+    username: postgres
+    password: postgres
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
