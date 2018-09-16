@@ -3,7 +3,7 @@ spring:
     name: Mulciber
   datasource:
     url: jdbc:postgresql://${db.addr}
-    username: ${db.user}
+    username: ${db.accountant}
     password: ${db.pass}
 
 ---

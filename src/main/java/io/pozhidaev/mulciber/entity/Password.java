@@ -37,7 +37,7 @@ public class Password {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", updatable = false)
-    private User user;
+    private Accountant accountant;
 
     @PrePersist
     private void onCreate(){

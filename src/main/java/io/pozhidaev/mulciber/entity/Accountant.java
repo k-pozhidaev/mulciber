@@ -14,8 +14,7 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "sec_user")
-public class User {
+public class Accountant {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -52,7 +51,7 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime dateOfBirth;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "accountant", fetch = FetchType.LAZY)
     private List<Password> passwords;
 
     @NotNull
