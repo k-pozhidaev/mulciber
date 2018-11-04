@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 @Configuration
 public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+    public void configure(AuthorizationServerSecurityConfigurer security) {
         security.passwordEncoder(NoOpPasswordEncoder.getInstance())
             .checkTokenAccess("permitAll()")
             .tokenKeyAccess("permitAll()");
@@ -38,7 +38,7 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
     }
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.tokenStore(new InMemoryTokenStore());
     }
 }
