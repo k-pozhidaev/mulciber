@@ -61,18 +61,22 @@ func main() {
 		json.NewEncoder(w).Encode(map[string]string{"CLIENT_ID": clientId, "CLIENT_SECRET": clientSecret})
 	})
 
-	http.HandleFunc("/safe", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/safe", validateToken(func(w http.ResponseWriter, r *http.Request) {
 		_, err := w.Write([]byte("Hello, I'm safe"))
 		if err != nil {
 			log.Printf("Write error: %s \n", err.Error())
 		}
-	})
+	}, srv))
+	http.HandleFunc("/protected", validateToken(func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Hello, I'm protected"))
+	}, srv))
+
 	log.Fatal(http.ListenAndServe(":9096", nil))
 
 }
 
 func validateToken(f http.HandlerFunc, srv *server.Server) http.HandlerFunc {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 		_, err := srv.ValidationBearerToken(r)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
@@ -80,5 +84,5 @@ func validateToken(f http.HandlerFunc, srv *server.Server) http.HandlerFunc {
 		}
 
 		f.ServeHTTP(w, r)
-	})
+	}
 }
