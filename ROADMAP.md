@@ -1,5 +1,6 @@
 # Roadmap
 
-
-
-Add UI 
+Proof protocol implementation
+Mock ui
+Create UI 
+Create DB Struct
